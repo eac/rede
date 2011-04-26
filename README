@@ -1,0 +1,11 @@
+Getting starting:
+
+npm install rede
+Start redis-client
+node rede.js
+
+All requests are in JSON:
+
+Subscribe:   { to: 'mychannel', state: 'available'   }
+Unsubscribe: { to: 'mychannel', state: 'unavailable' }
+Publish:     { to: 'mychannel', body:  'my message'  }
