@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <script src="socket.io.js"></script>
+
+    <script type="text/javascript">
+      var socket = new io.Socket(null, {port: 8080, rememberTransport: false });
+      socket.connect();
+      socket.on('message', function(obj) {
+        message(obj);
+      });
+
+     function subscribe(name) {
+       publish({ to: name, state: 'available' });
+     }
+
+     function unsubscribe(name) {
+       publish({ to: name, state: 'unavailable' });
+     }
+
+     function publish(obj) {
+       socket.send(JSON.stringify(obj));
+     }
+
+     function message(obj){
+       console.info('Message: %o', obj)
+       var el = document.createElement('p');
+       el.innerHTML = '<b>' + obj + '</b> ';
+
+       document.getElementById('messages').appendChild(el);
+     }
+
+    </script>
+  </head>
+
+  <body>
+    <h2>Messages</h2>
+    <div id="messages">
+    </div>
+  </body>
+</html>
+
+
