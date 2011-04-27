@@ -20,7 +20,7 @@ var socket = io.listen(server);
 
 socket.on('connection', function(client) {
   console.log('Connection [' + client.sessionId + ']');
-  client.send('connected');
+  client.send("'connected'");
 
   client.on('message', function(text) {
     console.log('Message [' + client.sessionId + ']: ' + text);
