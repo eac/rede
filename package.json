@@ -6,6 +6,5 @@
     "url":  "git://github.com/eac/rede.git" },
   "dependencies": {
     "redis":     "0.6.0",
-    "hiredis":   "0.1.9",
     "socket.io": "0.6.17" }
 }
