@@ -1,11 +1,18 @@
 Getting starting:
 
+# Configuring
+# Custom               #  Default
+process.env.REDIS_HOST #  localhost
+process.env.REDIS_PORT #  6379
+process.env.PORT       #  8080
+
+# Running
 npm install rede
 Start redis-client
-node rede.js
+node bin/rede.js
 
-All requests are in JSON:
-
+# Using
+# All requests are in JSON.
 Subscribe:   { to: 'mychannel', state: 'available'   }
 Unsubscribe: { to: 'mychannel', state: 'unavailable' }
 Publish:     { to: 'mychannel', body:  'my message'  }

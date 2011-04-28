@@ -1,8 +1,12 @@
+var redis_host = process.env.REDIS_HOST || 'localhost',
+    redis_port = process.env.REDIS_PORT || 6379,
+    port       = process.env.PORT       || '8080'
+
 var redis  = require('redis'),
     http   = require('http'),
     io     = require('socket.io'),
-    subscriber = redis.createClient(),
-    publisher  = redis.createClient(),
+    subscriber = redis.createClient(redis_port, redis_host),
+    publisher  = redis.createClient(redis_port, redis_host),
     Channel    = require('./channel').channel;
 
 Channel.publisher  = publisher;
@@ -13,8 +17,8 @@ var server = http.createServer(function(request, response) {
   response.end('Hello world\n');
 });
 
-server.listen(8080, '0.0.0.0');
-console.log('Server is active at http://0.0.0.0:8080');
+server.listen(port, '0.0.0.0');
+console.log('Server is active at http://0.0.0.0:' + port);
 
 var socket = io.listen(server);
 
