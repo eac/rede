@@ -31,23 +31,19 @@ socket.on('connection', function(client) {
     var message = JSON.parse(text);
     var channel = Channel.all[message.to] || Channel.create(message.to);
 
-    if (message.state) {
-      switch(message.state) {
-        case 'available':
-          console.info('Subscribe [' + client.sessionId + ']');     
-          channel.subscribe(client.sessionId);
-          break;
-        case 'unavailable':
-          console.info('Unsubscribe [' + client.sessionId + ']');  
-          channel.unsubscribe(client.sessionId);
-          break;
-      }
-    } else {
-      console.info('Publish [' + client.sessionId + ']: ' + message.to);
-      channel.publish(text);
-    }
-
-
+    switch(message.state) {
+      case 'available':
+        console.info('Subscribe [' + client.sessionId + ']');     
+        channel.subscribe(client.sessionId);
+        break;
+      case 'unavailable':
+        console.info('Unsubscribe [' + client.sessionId + ']');  
+        channel.unsubscribe(client.sessionId);
+        break;
+      default:
+        console.info('Publish [' + client.sessionId + ']: ' + message.to);
+        channel.publish(text);
+    } 
   });
 
   client.on('disconnect', function() {
