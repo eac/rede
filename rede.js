@@ -55,13 +55,7 @@ socket.on('connection', function(client) {
 
     for (var name in Channel.all) {
       var channel = Channel.all[name];
-      if (channel.subscribers[client.sessionId]) {
-        var unavailable = {
-          from:  client.sessionId,
-          state: 'unavailable',
-          to:    channel.name,
-        }
-
+      if (channel.subscribers[client.sessionId]) { 
         console.info('Unsubscribe [' + client.sessionId + ']');  
         channel.unsubscribe(client.sessionId);
       }
