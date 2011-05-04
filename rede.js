@@ -24,8 +24,7 @@ var socket = io.listen(server);
 
 socket.on('connection', function(client) {
   console.log('Connection [' + client.sessionId + ']');
-  client.send("'connected'");
-
+ 
   client.on('message', function(text) {
     console.log('Message [' + client.sessionId + ']: ' + text);
 
@@ -35,16 +34,20 @@ socket.on('connection', function(client) {
     if (message.state) {
       switch(message.state) {
         case 'available':
+          console.info('Subscribe [' + client.sessionId + ']');     
           channel.subscribe(client.sessionId);
           break;
         case 'unavailable':
+          console.info('Unsubscribe [' + client.sessionId + ']');  
           channel.unsubscribe(client.sessionId);
           break;
       }
+    } else {
+      console.info('Publish [' + client.sessionId + ']: ' + message.to);
+      channel.publish(text);
     }
 
-    console.info('Publish [' + client.sessionId + ']: ' + message.to);
-    channel.publish(text);
+
   });
 
   client.on('disconnect', function() {
@@ -59,8 +62,7 @@ socket.on('connection', function(client) {
           to:    channel.name,
         }
 
-        console.log('unavailable');
-        channel.publish(JSON.stringify(unavailable));
+        console.info('Unsubscribe [' + client.sessionId + ']');  
         channel.unsubscribe(client.sessionId);
       }
     }
